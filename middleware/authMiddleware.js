@@ -4,8 +4,8 @@ import Usuario from '../models/Usuario.js'
 const checkAuth = async (req, res, next) => {
 
     //console.log(req.headers);
-
     let token;
+    
     if(
         req.headers.authorization && 
         req.headers.authorization.startsWith('Bearer') 
