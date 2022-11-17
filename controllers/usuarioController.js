@@ -159,6 +159,15 @@ const perfil = (req, res)=>{
     }
 };
 
+const usuarioRegistrados = async (req, res) =>{
+    
+    const usuarios = await Usuario.find();
+
+    res.json(usuarios);
+
+    // console.log(usuarios);
+};
+
 
 export {
     prueba,
@@ -166,7 +175,8 @@ export {
     registrar,
     confirmar,
     perfil,
-    olvidePassword
+    olvidePassword,
+    usuarioRegistrados
 };
 
 
