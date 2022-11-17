@@ -1,5 +1,7 @@
 import Usuario from "../models/Usuario.js";
 import emailRegistro from "../helper/emailRegistro.js";
+import generarJWT from "../helper/generarJWT.js";
+import emailOlvidePassword from "../helper/emailOlvidePassword.js";
 
 const prueba = (req, res)=>{
     res.send({
@@ -62,29 +64,6 @@ const confirmar = async (req, res)=>{
         // console.log("Usuario confirmado correctamente");
     } catch (error) {
         console.error(error.message);    
-    }
-};
-
-/* Resto de Rutas */
-
-const perfil = (req, res)=>{
-
-    //Extraemos los datos del usuario almacenado en el servidor de nodejs
-    //console.log(req.usuario);
-
-    const { usuario } = req;
-
-    try{
-
-        res.status(200).json({
-            usuario
-        });
-
-    } catch (error) {
-        return res.status(404).json({
-            status: 'error',
-            error: error.message
-        });
     }
 };
 
@@ -157,6 +136,52 @@ const olvidePassword = async (req, res) =>{
         });
     }
 };
+
+/* Resto de Rutas */
+const perfil = (req, res)=>{
+
+    //Extraemos los datos del usuario almacenado en el servidor de nodejs
+    //console.log(req.usuario);
+
+    const { usuario } = req;
+
+    try{
+
+        res.status(200).json({
+            usuario
+        });
+
+    } catch (error) {
+        return res.status(404).json({
+            status: 'error',
+            error: error.message
+        });
+    }
+};
+
+
+export {
+    prueba,
+    auntenticar,
+    registrar,
+    confirmar,
+    perfil,
+    olvidePassword
+};
+
+
+
+/*
+comprobarToken,
+nuevoPassword,
+usuarioRegistrados,
+actualizarPerfil,
+actualizarPassword
+
+
+
+
+
 
 const comprobarToken = async (req, res) =>{
     const { token } = req.params;
@@ -262,18 +287,4 @@ const actualizarPassword = async (req, res) => {
       const error = new Error("El Password Actual es Incorrecto");
       return res.status(400).json({ msg: error.message });
     }
-};
-
-export {
-    prueba,
-    registrar,
-    confirmar,
-    perfil,
-    auntenticar,
-    olvidePassword,
-    comprobarToken,
-    nuevoPassword,
-    usuarioRegistrados,
-    actualizarPerfil,
-    actualizarPassword
-};
+};*/
