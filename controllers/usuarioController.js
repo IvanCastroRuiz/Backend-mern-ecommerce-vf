@@ -237,6 +237,33 @@ const actualizarPassword = async (req, res) => {
     }
 };
 
+const actualizarPerfil = async (req, res) => {
+    const { id } = req.params;
+    const usuario = await Usuario.findById(id);
+  
+    if (!usuario) {
+      return res.status(404).json({ msg: "No Encontrado" });
+    }
+  
+    // if (paciente.veterinario._id.toString() !== req.veterinario._id.toString()) {
+    //   return res.json({ msg: "Accion no válida" });
+    // }
+  
+    // Actualizar Usuario
+    usuario.nombre = req.body.nombre || usuario.nombre;
+    usuario.email = req.body.email || usuario.email;
+    usuario.password = req.body.password || usuario.password;
+    usuario.telefono = req.body.telefono || usuario.telefono;
+    usuario.direccion = req.body.direccion || usuario.direccion;
+    usuario.web = req.body.web || usuario.web;
+  
+    try {
+      const usuarioActualizado = await usuario.save();
+      res.json(usuarioActualizado);
+    } catch (error) {
+      console.log(error);
+    }
+};
 
 export {
     prueba,
@@ -248,7 +275,8 @@ export {
     usuarioRegistrados,
     nuevoPassword,
     comprobarToken,
-    actualizarPassword
+    actualizarPassword,
+    actualizarPerfil
 };
 
 
@@ -303,32 +331,6 @@ const usuarioRegistrados = async (req, res) =>{
     // console.log(usuarios);
 };
 
-const actualizarPerfil = async (req, res) => {
-    const { id } = req.params;
-    const usuario = await Usuario.findById(id);
-  
-    if (!usuario) {
-      return res.status(404).json({ msg: "No Encontrado" });
-    }
-  
-    // if (paciente.veterinario._id.toString() !== req.veterinario._id.toString()) {
-    //   return res.json({ msg: "Accion no válida" });
-    // }
-  
-    // Actualizar Usuario
-    usuario.nombre = req.body.nombre || usuario.nombre;
-    usuario.email = req.body.email || usuario.email;
-    usuario.password = req.body.password || usuario.password;
-    usuario.telefono = req.body.telefono || usuario.telefono;
-    usuario.direccion = req.body.direccion || usuario.direccion;
-    usuario.web = req.body.web || usuario.web;
-  
-    try {
-      const usuarioActualizado = await usuario.save();
-      res.json(usuarioActualizado);
-    } catch (error) {
-      console.log(error);
-    }
-};
+
 
 */
