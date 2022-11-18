@@ -138,7 +138,7 @@ const olvidePassword = async (req, res) =>{
 };
 
 /* Resto de Rutas */
-const perfil = (req, res)=>{
+const perfil = (req, res)=>{    
 
     //Extraemos los datos del usuario almacenado en el servidor de nodejs
     //console.log(req.usuario);
