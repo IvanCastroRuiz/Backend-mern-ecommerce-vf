@@ -168,30 +168,32 @@ const usuarioRegistrados = async (req, res) =>{
     // console.log(usuarios);
 };
 
+const nuevoPassword = async (req, res) =>{
+    const { token } = req.params;
+    const { password } = req.body;
 
-export {
-    prueba,
-    auntenticar,
-    registrar,
-    confirmar,
-    perfil,
-    olvidePassword,
-    usuarioRegistrados
+    const usuario = await Usuario.findOne({token});
+    if(!usuario){
+        const error = new Error('Hubo un error');
+        return res.status(400).json({
+            status: 'error',
+            msg: error.message
+        });
+    };
+
+    try {
+        usuario.token = null;
+        usuario.password = password;
+        await usuario.save(); 
+        res.json({msg: "Password modificado correctamente"});       
+    } catch (error) {
+        console.log("error: ", error.message);
+        return res.status(404).json({
+            status: 'error',
+            error: error.message
+        });
+    };
 };
-
-
-
-/*
-comprobarToken,
-nuevoPassword,
-usuarioRegistrados,
-actualizarPerfil,
-actualizarPassword
-
-
-
-
-
 
 const comprobarToken = async (req, res) =>{
     const { token } = req.params;
@@ -209,6 +211,61 @@ const comprobarToken = async (req, res) =>{
     }
 
 };
+
+const actualizarPassword = async (req, res) => {
+    // Leer los datos
+    const { id } = req.usuario;
+    const { pwd_actual, pwd_nuevo } = req.body;
+  
+    // Comprobar que el veterinario existe
+    const usuario = await Usuario.findById(id);
+    if (!usuario) {
+      const error = new Error("Hubo un error");
+      return res.status(400).json({ msg: error.message });
+    }
+  
+    // Comprobar su password
+    if (await usuario.comprobarPassword(pwd_actual)) {
+      // Almacenar el nuevo password
+  
+      usuario.password = pwd_nuevo;
+      await usuario.save();
+      res.json({ msg: "Password Almacenado Correctamente" });
+    } else {
+      const error = new Error("El Password Actual es Incorrecto");
+      return res.status(400).json({ msg: error.message });
+    }
+};
+
+
+export {
+    prueba,
+    auntenticar,
+    registrar,
+    confirmar,
+    perfil,
+    olvidePassword,
+    usuarioRegistrados,
+    nuevoPassword,
+    comprobarToken,
+    actualizarPassword
+};
+
+
+
+/*
+comprobarToken,
+nuevoPassword,
+usuarioRegistrados,
+actualizarPerfil,
+actualizarPassword
+
+
+
+
+
+
+
 
 const nuevoPassword = async (req, res) =>{
     const { token } = req.params;
@@ -274,27 +331,4 @@ const actualizarPerfil = async (req, res) => {
     }
 };
 
-const actualizarPassword = async (req, res) => {
-    // Leer los datos
-    const { id } = req.usuario;
-    const { pwd_actual, pwd_nuevo } = req.body;
-  
-    // Comprobar que el veterinario existe
-    const usuario = await Usuario.findById(id);
-    if (!usuario) {
-      const error = new Error("Hubo un error");
-      return res.status(400).json({ msg: error.message });
-    }
-  
-    // Comprobar su password
-    if (await usuario.comprobarPassword(pwd_actual)) {
-      // Almacenar el nuevo password
-  
-      usuario.password = pwd_nuevo;
-      await usuario.save();
-      res.json({ msg: "Password Almacenado Correctamente" });
-    } else {
-      const error = new Error("El Password Actual es Incorrecto");
-      return res.status(400).json({ msg: error.message });
-    }
-};*/
+*/

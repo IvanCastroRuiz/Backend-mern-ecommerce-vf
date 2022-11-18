@@ -5,7 +5,9 @@ import {
     confirmar,
     auntenticar,
     perfil,
-    usuarioRegistrados  
+    usuarioRegistrados,
+    comprobarToken,
+    nuevoPassword 
 } from '../controllers/usuarioController.js';
 
 // middleware para validar el token
@@ -19,10 +21,12 @@ router.post('/', registrar );
 router.get('/confirmar/:token', confirmar);
 router.post('/login', auntenticar);
 
+
 // Rutas Protegidas atraves del middleware checkAuth
 // Identificamos el usuario y se identifica para mostrale los datos o funcionalidades que le corresponden.
 router.get('/perfil', checkAuth , perfil);
 router.get('/lista-usuarios', usuarioRegistrados);
+router.route('/olvide-password/:token').get(comprobarToken).post(nuevoPassword);   
 
 
 export default router;
