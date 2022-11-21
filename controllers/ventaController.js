@@ -111,13 +111,13 @@ const createVentas = async (req, res)=>{
     try {
         const venta = new Venta(req.body);
         // Generar un proceso que actualice el stock del articulo
-        venta.articulos.forEach(element => {
-            getProducto(element, element.inf._id, element.cantidad);
-        });
+        // venta.articulos.forEach(element => {
+        //     getProducto(element, element.inf._id, element.cantidad);
+        // });
 
 
-        //const ventaGuardado = await venta.save();
-        //res.json(ventaGuardado);
+        const ventaGuardado = await venta.save();
+        res.json(ventaGuardado);
         res.json({
             msg: "Procesando.......",
         });
