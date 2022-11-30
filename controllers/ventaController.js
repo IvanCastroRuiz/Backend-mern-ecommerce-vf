@@ -118,9 +118,6 @@ const createVentas = async (req, res)=>{
 
         const ventaGuardado = await venta.save();
         res.json(ventaGuardado);
-        res.json({
-            msg: "Procesando.......",
-        });
     } catch (error) {
         console.error(error.message);
     }
